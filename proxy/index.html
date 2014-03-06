@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Кроссдоменный Запрос через PHP Proxy</title>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('.send-request').click(function(){
+                $.ajax({
+                    url:'proxy.php',
+                    dataType:'json',
+                    data:{
+                        id: $('#user-id').val()
+                    },
+                    type:'get',
+                    success: function(response) {
+                        var str = JSON.stringify(response, undefined, 4);
+                        document.getElementById('response').innerHTML = str;
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="text" id="user-id">
+    <button class="send-request">Request via Proxy</button>
+    <pre id="response"></pre>
+</body>
+</html>
