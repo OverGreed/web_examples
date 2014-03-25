@@ -1,23 +1,25 @@
+//var qs = require('querystring');
 var http = require('http');
 var port = 1337;
 var host = '127.0.0.1';
 
 http.createServer(function(request, response) {
     console.log('From: '+request.connection.remoteAddress+', Path: '+request.url);
-    var text = '';
 
     if(request.method === 'POST'){
+        var text = '';
         request.addListener('data', function(chunk) {
             text += chunk;
         });
         
         request.addListener('end', function() {
             if(text){
-                response.writeHeader(200, {
-                    'Content-Type': 'application/json'
-                });
                 try {
-                    var jsonObject = request = JSON.parse(text);
+                    var jsonObject = JSON.parse(text);
+                    //var jsonObject = qs.parse(text);
+                    response.writeHeader(200, {
+                        'Content-Type': 'application/json'
+                    });
                     response.end(JSON.stringify({
                         success: true,
                         username: jsonObject.username
